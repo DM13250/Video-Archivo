@@ -1,6 +1,4 @@
 "use strict";
-// Objeto VideoSystem
-
 
 function VideoSystemException() {
 	this.name = "VideoSystemException";
@@ -95,7 +93,7 @@ PersonNotExistsVideoSystemException.prototype.constructor = PersonNotExistsVideo
 
 function NullParamException(param) {
 	this.name = "NullParamException";
-	this.message = "Error: El parametro "+param+" no puede ser nulo";
+	this.message = "Error: El parametro " + param + " no puede ser nulo";
 }
 NullParamException.prototype = new VideoSystemException();
 NullParamException.prototype.constructor = NullParamException;
@@ -128,13 +126,12 @@ var VideoSystem = (function () { //La función anónima devuelve un método getI
 
 	function init() { //Inicialización del Singleton
 
-		//Declaración de la función constructora de la instancia VideoSystem
 		function VideoSystem(){
 			//La función se invoca con el operador new
-			if (!(this instanceof VideoSystem)) 
+			if (!(this instanceof VideoSystem)){
 				throw new InvalidAccessConstructorException();
+            }
 
-			/* Definición del atributo name */
 			var _name = "";
 			Object.defineProperty(this, 'name', {
 				get:function(){
@@ -142,15 +139,17 @@ var VideoSystem = (function () { //La función anónima devuelve un método getI
 				},
 				set:function(name = ""){
 					name = name.trim();
-					if (name === 'undefined' || name === "") throw new EmptyValueException("name");					
+					if (name === 'undefined' || name === ""){
+                        throw new EmptyValueException("name");	
+                    }
 					_name = name;
 				}		
 			});
 			
-			/* Definición del atributo categories como array para contener todas las categorías del sistema. */
-			var _categories = []; //array de categorías.
+			// Definición del atributo categories 
+			var _categories = []; 
 
-			//Devuelve un iterator de los autores del gestor
+			//Definicion de la propiedad
 			Object.defineProperty(this, 'categories', {
 				get:function(){
 				    var nextIndex = 0;		    
@@ -163,7 +162,7 @@ var VideoSystem = (function () { //La función anónima devuelve un método getI
 				}	
 			});	
 
-			//Añade un nueva categoria al gestor
+			//Añadir una nueva categoria al gestor
 			this.addCategory = function(category){
 				if (!(category instanceof Category)) { 
 					throw new CategoryVideoSystemException();
@@ -179,11 +178,10 @@ var VideoSystem = (function () { //La función anónima devuelve un método getI
 				} else{
 					throw new CategoryExistsVideoSystemException();
 				}	
-
 				return _categories.length;
 			}
 
-			//Elimina una categoría del gestor
+			//Eliminar una categoria del gestor
 			this.removeCategory = function(category){
 				if (!(category instanceof Category)) { 
 					throw new CategoryVideoSystemException();
@@ -197,21 +195,21 @@ var VideoSystem = (function () { //La función anónima devuelve un método getI
 				return _categories.length;
 			}
 
-			//Dado una categoría, devuelve la posición de esa categoría en el array de categorías o -1 si no lo encontramos.
+			//Da una categoria y dice si se encuentra o no
 			this.getCategoryPosition = function(category){
 				if (!(category instanceof Category)) { 
 					throw new CategoryVideoSystemException();
 				}		
-
 				function compareElements(element) {
 				  return (element.category.name === category.name)
 				}
-				
 				return _categories.findIndex(compareElements);		
 			}
 
-			var _users = []; //array con los users del sistema.
-			//Devuelve un iterator de los usuarios del sistema
+            // Definición del atributo categories 
+			var _users = [];
+            
+			//Defincion de la propiedad
 			Object.defineProperty(this, 'users', {
 				get:function(){
 				    var nextIndex = 0;		    
@@ -229,22 +227,22 @@ var VideoSystem = (function () { //La función anónima devuelve un método getI
 				if (!(user instanceof User)) { 
 					throw new UserVideoSystemException ();
 				}
-				//Compruebo que el surname no este registrado, lo busco
+				//Compruebar que no este registrado
 				var positionName = this.getUserNamePosition(user); 
-				if (positionName !== -1){ //Si existe lanzo una excepcion
+				if (positionName !== -1){ 
 					throw new UserExistsVideoSystemException();
 				} 
-				//Compruebo que el email no este registrado, lo busco
+				//Comprobar que el email no este registrado
 				var positionEmail = this.getUserEmailPosition(user);
-				if(positionEmail !== -1){ //Si existe lanzo una excepcion
+				if(positionEmail !== -1){ 
 					throw new EmailExistsVideoSystemExeption();
 				}
-				//Si no ha saltado ninguna exepcion añado el usuario al sistema, lo añado
 				_users.push(user);
-
-				return _users.length; //Devuelvo el nº elementos
+                
+				return _users.length;
 			}
-            //Elimina un nuevo usuario del sistema
+
+			//Elimina un nuevo usuario del sistema
 			this.removeUser = function(user){
 				if (!(user instanceof User)) { 
 					throw new UserVideoSystemException ();
@@ -258,7 +256,7 @@ var VideoSystem = (function () { //La función anónima devuelve un método getI
 				return _users.length;
 			}
 
-			//Dado un usuario, devuelve la posición de ese usu en el array de usuarios o -1 si no lo encontramos.
+			//Dado un usuario devuele si esta encontrado o no
 			this.getUserNamePosition = function(user){
 				if (!(user instanceof User)) { 
 					throw new UserVideoSystemException ();
@@ -271,7 +269,7 @@ var VideoSystem = (function () { //La función anónima devuelve un método getI
 				return _users.findIndex(compareElements);		
 			}
 
-			//Dado un usuario, devuelve la posición de ese usu en el array de usuarios o -1 si no lo encontramos.
+			//Dado un usuario devuel si esta encontrado o no
 			this.getUserEmailPosition = function(user){
 				if (!(user instanceof User)) { 
 					throw new UserVideoSystemException ();
@@ -284,8 +282,9 @@ var VideoSystem = (function () { //La función anónima devuelve un método getI
 				return _users.findIndex(compareElements);	
 			}
 
-			/* Definición del atributo directors como array para contener todos las produciones del gestor. */
-			var _productions = []; //array con las produciones del sistema.
+			
+            // Definición del atributo productions
+			var _productions = [];
 			//Devuelve un iterator de los produciones del gestor
 			Object.defineProperty(this, 'productions', {
 				get:function(){
@@ -299,14 +298,13 @@ var VideoSystem = (function () { //La función anónima devuelve un método getI
 				}	
 			});
 
-			//Añade una nueva producion al sistema
+			//Añadir una nueva producion al sistema
 			this.addProduction = function(production){
 				if(!(production instanceof Production)){
 					throw new ProductionVideoSystemException;
 				}
-				
 				var position = this.getProductionPosition(production); 
-				//Si no existe la produccion se añade al array	
+				//Si no existe la produccion que se añade al array	
 				if (position === -1){
 					_productions.push(production);
 				} else{
@@ -319,8 +317,7 @@ var VideoSystem = (function () { //La función anónima devuelve un método getI
 			this.removeProduction = function(production){
 				if(!(production instanceof Production)){
 					throw new ProductionVideoSystemException;
-				}
-				
+                }
 				var position = this.getProductionPosition(production);
 				if (position !== -1){
 					_productions.splice(position, 1);			
@@ -330,20 +327,19 @@ var VideoSystem = (function () { //La función anónima devuelve un método getI
 				return _productions.length;
 			};
 
-			//Dado una producion, devuelve la posición de ese usu en el array de usuarios o -1 si no lo encontramos.
+			//Dado un production devuele si esta encontrado o no
 			this.getProductionPosition = function(production){
 				if(!(production instanceof Production)){
 					throw new ProductionVideoSystemException;
 				}
-
 				function compareElements(element) {
 				  return (element.title === production.title)
 				}
 				return _productions.findIndex(compareElements);		
 			}
 
-			/* Definición del atributo actor como array para contener todos las produciones del gestor. */
-			var _actors = []; //array con los actores del sistema.
+		    // Definición del atributo productions
+			var _actors = []; 
 			//Devuelve un iterador que permite recorrer los actores registrados en el sistema
 			Object.defineProperty(this, 'actors', {
 				get:function(){
@@ -364,8 +360,7 @@ var VideoSystem = (function () { //La función anónima devuelve un método getI
 				}
 				
 				var position = this.getActorPosition(actor); 
-				//Si la posicion de position es igual a -1, no
-				//existe ningun actor con el mismo nombre
+				//Si la posicion es igual a -1, no existe ese actor con ese nombre
 				if (position === -1){
 					_actors.push(
 						{
@@ -384,7 +379,6 @@ var VideoSystem = (function () { //La función anónima devuelve un método getI
 				if(!(actor instanceof Person)){
 					throw new PersonVideoSystemException();
 				}
-
 				var position = this.getActorPosition(actor);
 				if (position !== -1){
 					_actors.splice(position, 1);			
@@ -394,23 +388,412 @@ var VideoSystem = (function () { //La función anónima devuelve un método getI
 				return _actors.length;
 			};
 
-			//Dado un objeto Actor, devuelve la posición de ese objeto.
+			//Pasando un actor devuelve la posicion que se encuentre
 			this.getActorPosition = function(actor){
 				if(!(actor instanceof Person)){
 					throw new PersonVideoSystemException();
 				}
-
 				function compareElements(element) {
 				  return (element.actor.name === actor.name || element.actor.lastname1 === actor.lastname1)
 				}
 				return _actors.findIndex(compareElements);		
 			}
 
-		} //Fin del constructor 
-		reproductionSystem.prototype = {}; 
-		reproductionSystem.prototype.constructor = reproductionSystem;
+			//Definicion del atributo directors
+			var _directors = [];
+			//Devuelve un iterator de los directores del gestor
+			Object.defineProperty(this, 'directors', {
+				get:function(){
+				    var nextIndex = 0;		    
+				    return {
+				       next: function(){
+				           return nextIndex < _directors.length ?
+				               {value: _directors[nextIndex++], done: false} :
+				               {done: true};
+				       }
+				    }
+				}	
+			});	
 
-		var instance = new reproductionSystem();
+			//Añadir un nuevo director
+			this.addDirector = function(director){
+				if(!(director instanceof Person)){
+					throw new InvalidParamException("Person");
+				}
+				var position = this.getDirectorPosition(director); 
+				if (position === -1){
+					_directors.push(
+						{
+							director: director,
+							productions: []
+						}
+					);
+				} else{
+					throw new DirectorExistsException("name");
+				}
+				return _directors.length;
+			};
+
+			//Elimina un nuevo director del sistema
+			this.removeDirector = function(person){
+				if (!(person instanceof Person)) { 
+					throw new PersonVideoSystemException ();
+				}		
+				var position = this.getDirectorPosition(person); 	
+				if (position !== -1){
+					_directors.splice(position, 1);															
+				} else{
+					throw new PersonNotExistsVideoSystemException();
+				}	
+				return _directors.length;
+			}
+
+			//Pasando un director devuelve su posicion si esta o no del array
+			this.getDirectorPosition = function(person){
+				if (!(person instanceof Person)) { 
+					throw new PersonVideoSystemException ();
+				}		
+				function compareElements(element) {
+				  return (element.director.name === person.name)
+				}
+				return _directors.findIndex(compareElements);		
+			}
+
+			//Asigna uno más producciones a una categoría. Si el objeto Category o Production no existen se añaden al sistema.
+			this.assignCategory = function(category, production){
+				if (category == null) {
+					throw new NullParamException("category");
+				}
+				if (production == null) {
+					throw new NullParamException("production");
+				}
+				var positionCategory = this.getCategoryPosition(category); 
+				var positionProduction = this.getProductionPosition(production);
+
+				if(positionCategory !== -1){//Si existe la categoria, busca la produccion
+					if(positionProduction !== -1){//Buscamos en el array de productions si coincide con la introducida
+						var i = 0;
+						var encontrado = false;
+						while(i < _categories[positionCategory].productions.length && !encontrado){
+							if (_categories[positionCategory].productions[i].title === production.title){
+								encontrado = true;
+							}
+							i++;
+						}
+						if(!encontrado){//Coge la categoria que coincida con la position de la categoria encontrada
+							_categories[positionCategory].productions.push(production);
+						}else{
+							throw new AssignCategoryException();
+						}
+					}else{//Si no existe se la añade
+						this.addProduction(production);
+						this.assignCategory(category, production);
+					}
+				}else{//Si no existe la añade
+					this.addCategory(category);
+					this.assignCategory(category, production);
+				}
+
+				return _categories[positionCategory].productions.length;
+			};
+
+			//Dado una produccion y el array productions de las categories, devuelve la posición de la produccion.
+			this.getProductionCategoryPosition = function(production, categoryProduction){
+				function compareElements(element) {
+					return (element.title === production.title)
+				}
+				return categoryProduction.findIndex(compareElements);		
+			}
+
+			//Desasigna una produccion de una categoria.
+			this.deassignCategory = function(category, production){
+				if (category == null) {
+					throw new NullParamException("category");
+				}
+				if (production == null) {
+					throw new NullParamException("production");
+				}
+				var positionCategory = this.getCategoryPosition(category); 
+				var positionProduction = this.getProductionCategoryPosition(production, _categories[positionCategory].productions);
+
+				if(positionCategory !== -1){//Si existe la categoria, busca la produccion
+					if(positionProduction !== -1){		
+						_categories[positionCategory].productions.splice(positionProduction,1);
+					}else{
+						throw new ProductionNotExistsVideoSystemException();
+					}	
+				}else{
+					throw new CategoryNotExistsVideoSystemException();
+				}
+
+				return _categories[positionCategory].productions.length;
+			};
+
+			// LAS SIGUIENTES FUNCIONES ASIGNAN Y DESAGINAN A DIRECTOR
+			//Asigna una produccion a un director.
+			this.assignDirector = function(director, production){
+				if (director == null) {
+					throw new NullParamException("director");
+				}
+				if (production == null) {
+					throw new NullParamException("production");
+				}
+				var positionDirector = this.getDirectorPosition(director); 
+				var positionProduction = this.getProductionPosition(production);
+
+				if(positionDirector !== -1){ //Si existe el director, busca la produccion
+					if(positionProduction !== -1){ //Si existe la produccion, se la añade al director
+						//Buscamos dentro del array de productions si coincide
+						var i = 0;
+						var encontrado = false;
+						while(i < _directors[positionDirector].productions.length && !encontrado){
+							if (_directors[positionDirector].productions[i].title === production.title){
+								encontrado = true;
+							}
+							i++;
+						}
+						if(!encontrado){//Coge el actor que coincida con la position del actor encontrado.
+							_directors[positionDirector].productions.push(production);
+						}else{
+							throw new AssignDirectorException();
+						}
+					}else{
+						this.addProduction(production);
+						this.assignDirector(director, production);
+					}
+				}else{
+					this.addDirector(director);
+					this.assignDirector(director, production);
+				}
+				return _directors[positionDirector].productions.length;
+			};
+
+			//Dado una produccion y el array productions de los directores, devuelve la posición de la produccion.
+			this.getProductionDirectorPosition = function(production, directorProduction){
+				function compareElements(element) {
+					return (element.title === production.title)
+				}
+				return directorProduction.findIndex(compareElements);		
+			}
+
+			//Desasigna una produccion de un director.
+			this.deassignDirector = function(director, production){
+				if (director == null) {
+					throw new NullParamException("director");
+				}
+				if (production == null) {
+					throw new NullParamException("production");
+				}
+
+				var positionDirector = this.getDirectorPosition(director); 
+				var positionProduction = this.getProductionDirectorPosition(production, _directors[positionDirector].productions);
+				
+				if(positionDirector !== -1){//Si existe el director, busca la produccion
+					if(positionProduction !== -1){//Si existe la produccion, la asigna al director
+						_directors[positionDirector].productions.splice(positionProduction,1);
+					}else{
+						throw new ProductionNotExistsVideoSystemException();
+					}
+				}else{
+					throw new PersonNotExistsVideoSystemException();
+				}
+				return _directors[positionDirector].productions.length;
+			};
+
+			// LAS SIGUIENTES FUNCIONES ASIGNAN Y DESAGINAN A ACTOR 
+			//Asigna uno produccion a un actor.
+			this.assignActor = function(actor, production, character, main){
+				if (actor == null) {
+					throw new NullParamException("actor");
+				}
+				if (production == null) {
+					throw new NullParamException("production");
+				}
+				var positionActor = this.getActorPosition(actor); 
+				var positionProduction = this.getProductionPosition(production);
+
+				if(positionActor !== -1){//Si existe el actor, busca la produccion
+					if(positionProduction !== -1){//Si existe la produccion, la asigna al actor
+						//Buscamos en el array de productions si coincide alguna con la introducida
+						var i = 0;
+						var encontrado = false;
+						while(i < _actors[positionActor].productions.length && !encontrado){
+							if (_actors[positionActor].productions[i].production.title === production.title){
+								encontrado = true;
+							}
+							i++;
+						}
+						if(!encontrado){
+							//Coge el actor que coincida con la position del actor encontrado.
+							_actors[positionActor].productions.push(
+								{
+									production: production,
+								}
+							);
+						}else{
+							throw new AssignActorException();
+						}
+					}else{
+						this.addProduction(production);
+						this.assignActor(actor, production);
+					}	
+				}else{
+					this.addActor(actor);
+					this.assignActor(actor, production);
+				}
+				
+				return _actors[positionActor].productions.length;
+			};
+
+			//Dado una produccion y el array productions de los actores, devuelve la posición de esa produccion.
+			this.getProductionActorPosition = function(production, actorProduction){
+				function compareElements(element) {
+					return (element.production.title === production.title)
+				}
+				return actorProduction.findIndex(compareElements);		
+			}
+
+			//Desasigna una o más producciones de un actor.
+			this.deassignActor = function(actor, production){
+				if (actor == null) {
+					throw new NullParamException("actor");
+				}
+				if (production == null) {
+					throw new NullParamException("production");
+				}
+				var positionActor = this.getActorPosition(actor); 
+				var positionProduction = this.getProductionActorPosition(production, _actors[positionActor].productions);
+				
+				if(positionActor !== -1){ //Si existe el actor, busca la produccion
+					if(positionProduction !== -1){
+						_actors[positionActor].productions.splice(positionProduction,1);
+					}else{
+						throw new ProductionNotExistsVideoSystemException();
+					}	
+				}else{
+					throw new PersonNotExistsVideoSystemException();
+				}
+
+				return _actors[positionActor].productions.length;
+			};
+
+			//  FUNCIONES SON LOS ITERADORES DE LAS FUNCIONES DE ASSIGN Y DESASSIGN ANTERIORES
+			//Obtiene un iterador con la relación de los actores.
+			this.getCast = function(production){
+				if (production == null) {
+					throw new NullParamException("production");
+				}			
+				var positionProduction = this.getProductionPosition(production); 	
+				if (positionProduction === -1) {throw new ProductionNotExistsVideoSystemException();}
+				var nextActor = 0;
+				var nextProduction = 0;
+			    return {
+					next: function(){
+						var actor = null;
+						var papel = null;
+						var principal = null;
+						while (nextActor < _actors.length && actor === null){
+							if (nextProduction < _actors[nextActor].productions.length && _actors[nextActor].productions[nextProduction].production.title === production.title){
+								actor = _actors[nextActor].actor;
+								papel = _actors[nextActor].productions[nextProduction].character;
+								principal = _actors[nextActor].productions[nextProduction].main;
+							}
+							nextProduction++;
+							if (nextProduction >= _actors[nextActor].productions.length){
+								nextProduction = 0;
+								nextActor++;
+							}
+						}
+						if (actor !== null && papel !== null && principal !== null){
+							return {value: actor, papel: papel, principal: principal, done: false}
+						}
+						if (nextActor >= _actors.length) return {done: true};
+					}
+				}
+			};
+
+			//Obtiene un iterador con las producciones de un director.
+			this.getProductionsDirector = function(director){
+				if (director == null) {
+					throw new NullParamException("director");
+				}			
+				var positionDirector = this.getDirectorPosition(director); 	
+				if (positionDirector === -1) {throw new PersonNotExistsVideoSystemException();}
+				var nextIndex = 0;
+			    return {
+			       next: function(){
+			       		var directors = null;
+			       		while (nextIndex < _directors[positionDirector].productions.length && directors === null){
+			       			if (_directors[positionDirector].director.name === director.name){
+								directors = _directors[positionDirector].productions[nextIndex];
+			       			}
+			       			nextIndex++;
+			       		}
+			       		if (directors !== null){
+			       			return {value: directors, done: false}
+			       		}
+			       		if (nextIndex >= _directors[positionDirector].productions.length) return {done: true};
+			       }
+			    }
+			};
+
+			//Obtiene un iterador con las producciones de un actor y su papel en la producción.
+			this.getProductionsActor = function(actor){
+				if (actor == null) {
+					throw new NullParamException("actor");
+				}			
+				var positionActor = this.getActorPosition(actor); 	
+				if (positionActor === -1) {throw new PersonNotExistsVideoSystemException();}
+				var nextIndex = 0;
+			    return {
+			       next: function(){
+						   var production = null;
+						   var papel = null;
+			       		while (nextIndex < _actors[positionActor].productions.length && production === null){
+			       			if (_actors[positionActor].actor.name === actor.name){
+								production = _actors[positionActor].productions[nextIndex].production;
+								papel = _actors[positionActor].productions[nextIndex].character;
+			       			}
+			       			nextIndex++;
+			       		}
+			       		if (production !== null){
+			       			return {value: production, papel: papel, done: false}
+			       		}
+			       		if (nextIndex >= _actors[positionActor].productions.length) return {done: true};
+			       }
+			    }
+			};
+
+			//Obtiene un iterador con las producciones de una categoría determinada.
+			this.getProductionsCategory = function(category){
+				if (category == null) {
+					throw new NullParamException("category");
+				}			
+				var positionCategory = this.getCategoryPosition(category); 	
+				if (positionCategory === -1) {throw new CategoryNotExistsVideoSystemException();}
+				var nextIndex = 0;
+			    return {
+			       next: function(){
+			       		var production = null;
+			       		while (nextIndex < _categories[positionCategory].productions.length && production === null){
+			       			if (_categories[positionCategory].category.name === category.name){
+								production = _categories[positionCategory].productions[nextIndex];
+			       			}
+			       			nextIndex++;
+			       		}
+			       		if (production !== null){
+			       			return {value: production, done: false}
+			       		}
+			       		if (nextIndex >= _categories[positionCategory].productions.length) return {done: true};
+			       }
+			    }
+			};
+
+		} //Fin constructor VideoSystem
+		VideoSystem.prototype = {}; 
+		VideoSystem.prototype.constructor = VideoSystem;
+
+		var instance = new VideoSystem();//Devolvemos el objeto VideoSytem para que sea una instancia única.
 		Object.freeze(instance);
 		return instance;
 	} //Fin inicialización del Singleton

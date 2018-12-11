@@ -7,12 +7,6 @@ function Person(name, lastName1, lastName2,born ,picture) {
         throw new InvalidAccessConstructorException();
     }
     
-    //Elimina los espacios del principio y del final de la cadena
-    name = name.trim();
-    lastName1 = lastName1.trim();
-    lastName2 = lastName2.trim();
-    picture = picture.trim();
-    
     //Comprobación de los valores por primera vez
     name = typeof name !== 'undefined' ? name : "";
     if (name === "") {
@@ -23,9 +17,9 @@ function Person(name, lastName1, lastName2,born ,picture) {
         throw new EmptyValueException("lastName1");
     }
     lastName2 = typeof lastName2 !== 'undefined' ? lastName2 : "";
-    /*if (!(born instanceof Date)){
+    if (!(born instanceof Date)){
         throw new InvalidAccessException("Date");
-    }*/
+    }
 	born = typeof born !== 'undefined' ? born : "";
 	if (born === ""){
         throw new InvalidDateException("born");
@@ -265,9 +259,9 @@ function Production(title, nacionality, publication, synopsis, image) { //Padre 
         throw new InvalidAccessConstructorException();
     }
     
-    //Elimina los espacios del principio y del final de la cadena
-    //title.trim();
-    //publication.trim();
+    if ((this.constructor === Production)) {
+        throw new AbstractClassException("Production");
+    }
 
     //Comprobación de los valores por primera vez
     title = typeof title !== 'undefined' ? title : "";
@@ -443,12 +437,12 @@ function Serie(title, nationality, publication, synopsis, image, season) {
 			value = typeof value !== 'undefined' ? value : [];
 			_seasons = value;
 		}
-	});	
+	});
 }
 Serie.prototype = Object.create(Production.prototype);
 Serie.prototype.constructor = Serie;
 Serie.prototype.toString = function(){
-	return Production.prototype.toString.call(this) + " " + this.season;
+	return Production.prototype.toString.call(this) + " Seasons: " + this.seasons;
 }
 
 function Season(title, episodes) {
@@ -456,9 +450,6 @@ function Season(title, episodes) {
     if (!(this instanceof Season)) {
         throw new InvalidAccessConstructorException();
     }
-
-    //Elimina los espacios del principio y del final de la cadena
-    title.trim();
     
     //Comprobación de los valores por primera vez
     title = typeof title !== 'undefined' ? title : "";
