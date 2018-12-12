@@ -208,17 +208,7 @@ function Resource(duration, link, audios, subititles) {
 
     Object.defineProperty(this, 'audios', {
         get: function () {
-            var i = 0;
-            return {
-                next: function () {
-                    return i < _audios[i].length ? {
-                        value: _audios[i],
-                        done: false
-                    } : {
-                        done: true
-                    };
-                }
-            }
+            return _audios;
         },
         set: function (value) {
             value = typeof value !== 'undefined' ? value : "";
@@ -228,17 +218,7 @@ function Resource(duration, link, audios, subititles) {
 
     Object.defineProperty(this, 'subtitles', {
          get: function () {
-            var i = 0;
-            return {
-                next: function () {
-                    return i < _subtitles[i].length ? {
-                        value: _subtitles[i],
-                        done: false
-                    } : {
-                        done: true
-                    };
-                }
-            }
+            return _subtitles
         },
         set: function (value) {
             value = typeof value !== 'undefined' ? value : "";

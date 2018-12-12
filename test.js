@@ -67,10 +67,23 @@ function testVideoSystem(){
     console.log("##### Testeo del Objeto Coordinate. ##### ");
 	try {
 		var coor = new Coordinate(80,114);
-		console.log(coor.toString());
+		console.log("Coordenadas coor1: " + coor.toString());
 	} catch (error) {
 		console.log(error.toString());
 	}
+    try {
+			var coor = new Coordinate(-190,90);
+			console.log("Coordenadas coor2: " + coor2.toString);
+		} catch(error) {
+			console.log(error.toString());
+		}
+		try {
+			var coor3 = new Coordinate(-90,190);
+			console.log("Coordenadas coor3: " + coor3.toString);
+		} catch(error) {
+			console.log(error.toString());
+		}	
+    
 	console.log("####################################### ");
 
     console.log("##### Testeo del Objeto Movie. ##### ");
@@ -121,16 +134,14 @@ function testVideoSystem(){
 		{title:'Episodio 1',episode: resource1, scenarios:[new Coordinate(12,22)]},
 		{title:'Episodio 2',episode: resource2, scenarios:[new Coordinate(11,72)]}
 		]);
-		var season3 = new Season("Temporada 3",[]);
 		console.log(season1.toString());
 		console.log(season2.toString());
-		console.log(season3.toString());
 	} catch (error) {
 		console.log(error.toString());
 	}
 	try {
-		var season4 = new Season();
-		console.log(season4.toString);
+		var season3 = new Season();
+		console.log(season3.toString);
 	} catch (error) {
 		console.log(error.toString());
 	}
@@ -167,7 +178,7 @@ function testVideoSystem(){
 	}
 
 	try {
-		console.log("Añadimos la categoria " + cate4.name +": " + video.addCategory(cate4));
+		console.log("Añadimos la categoria " + cate3.name +": " + video.addCategory(cate3));
 	} catch (error) {
 		console.log(error.toString());
 	}
@@ -249,7 +260,6 @@ console.log("####################################### ");
 		console.log("Añadimos la produccion " + mov1.title + ": " + video.addProduction(mov1));
 		console.log("Añadimos la produccion " + mov2.title + ": " + video.addProduction(mov2));
 		console.log("Añadimos la produccion " + serie1.title + ": " + video.addProduction(serie1));
-		console.log("Añadimos la produccion " + serie2.title + ": " + video.addProduction(serie2));
 	} catch (error) {
 		console.log(error.toString());
 	}
@@ -271,12 +281,12 @@ console.log("####################################### ");
 	console.log("####################################### ");
 	
 	try {
-		console.log("Eliminamos la produccion "+ serie2.title +": " + video.removeProduction(serie2));
+		console.log("Eliminamos la produccion "+ serie1.title + ": " + video.removeProduction(serie1));
 	} catch (error) {
 		console.log(error.toString());
 	}
     	try {
-		console.log("Eliminamos la produccion " + serie2.title +": " + video.removeProduction(serie2));
+		console.log("Eliminamos la produccion " + serie1.title +": " + video.removeProduction(serie1));
 	} catch (error) {
 		console.log(error.toString());
 	}
@@ -333,15 +343,7 @@ console.log("####################################### ");
 		console.log(error.toString());
 	}
 	console.log("####################################### ");
-    
-	console.log("#### Mostramos los directores ####");
-	var directores = video.directors;
-	var director = directores.next();
-	while (director.done !== true){
-		console.log (" " + director.value);
-		director = directores.next();
-	}
-	console.log("####################################### ");
+
     try {
 		console.log("Eliminamos al director "+ per1.name +": " + video.removeDirector(per1));
 	} catch (error) {
@@ -444,7 +446,7 @@ console.log("####################################### ");
 	
 	try {	
 		console.log("Asignamos la produccion " + mov1.title + " al actor " + per1.name + ": " + video.assignActor(per1,mov1));
-		console.log("Asignamos la produccion " + mov2.title + " al actor "+ per2.name + ": " + video.assignActor(per2,mov2));	
+		console.log("Asignamos la produccion "+ mov2.title +" al actor "+ per1.name +": " + video.assignActor(persona,movie));
 	} catch (error) {
 		console.log(error.toString());
 	}

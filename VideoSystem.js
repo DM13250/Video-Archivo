@@ -602,7 +602,7 @@ var VideoSystem = (function () { //La función anónima devuelve un método getI
 
 			// LAS SIGUIENTES FUNCIONES ASIGNAN Y DESAGINAN A ACTOR 
 			//Asigna uno produccion a un actor.
-			this.assignActor = function(actor, production, character, main){
+						this.assignActor = function(actor, production){
 				if (actor == null) {
 					throw new NullParamException("actor");
 				}
@@ -612,9 +612,8 @@ var VideoSystem = (function () { //La función anónima devuelve un método getI
 				var positionActor = this.getActorPosition(actor); 
 				var positionProduction = this.getProductionPosition(production);
 
-				if(positionActor !== -1){//Si existe el actor, busca la produccion
+				if(positionActor !== -1){//Si el actor esta que busque la produccion
 					if(positionProduction !== -1){//Si existe la produccion, la asigna al actor
-						//Buscamos en el array de productions si coincide alguna con la introducida
 						var i = 0;
 						var encontrado = false;
 						while(i < _actors[positionActor].productions.length && !encontrado){
@@ -624,7 +623,6 @@ var VideoSystem = (function () { //La función anónima devuelve un método getI
 							i++;
 						}
 						if(!encontrado){
-							//Coge el actor que coincida con la position del actor encontrado.
 							_actors[positionActor].productions.push(
 								{
 									production: production,
@@ -641,7 +639,6 @@ var VideoSystem = (function () { //La función anónima devuelve un método getI
 					this.addActor(actor);
 					this.assignActor(actor, production);
 				}
-				
 				return _actors[positionActor].productions.length;
 			};
 
